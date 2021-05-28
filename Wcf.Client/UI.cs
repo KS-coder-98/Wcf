@@ -180,11 +180,22 @@ namespace Wcf.Client
         #region ShowResult
         public void ShowResult(List<List<AirConnection>> result)
         {
-            if ( result.Last().Last().portA == "ERROR")
+            try
             {
-                Console.WriteLine(result.Last().Last().portB);
+                if (result.Last().Last().portA == "ERROR")
+                {
+                    Console.WriteLine(result.Last().Last().portB);
+                    return;
+                }
+            }catch(Exception e)
+            {
+                Console.WriteLine("Error!!!!");
+                Console.WriteLine("nie ma połaczenia o danych kryteriach");
                 return;
             }
+
+
+
             int numberOption = 0;
             int numberConnetion;
             result.ForEach(x =>

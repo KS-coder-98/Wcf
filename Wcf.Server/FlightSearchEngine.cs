@@ -28,15 +28,17 @@ namespace Wcf.Server
             }
             if (
                 !(from connection in baseFlights
-                  where connection.portA == portB
-                  select connection).ToList().Any())
+                where connection.portB == portB
+                select connection).ToList().Any())
             {
                 throw new NoExistCityException(portB);
             }
-            if ( departure.CompareTo(arrival) < 0)
+            if (departure.CompareTo(arrival) > 0)
             {
                 throw new WrongDateexception();
             }
+ 
+
         }
 
         public List<List<AirConnection>> Start(String portA, String portB, DateTime departure, DateTime arrival)
@@ -50,6 +52,7 @@ namespace Wcf.Server
                 }
                 catch (NoExistCityException e)
                 {
+                    _processDirTrack = 0;
                     List<AirConnection> t = new List<AirConnection>();
                     t.Add(new AirConnection("ERROR", departure, e.getMsg(), arrival));
                     resultConnections.Add(t);
@@ -57,11 +60,13 @@ namespace Wcf.Server
                 }
                 catch (WrongDateexception e)
                 {
+                    _processDirTrack = 0;
                     List<AirConnection> t = new List<AirConnection>();
                     t.Add(new AirConnection("ERROR", departure, e.getMsg(), arrival));
                     resultConnections.Add(t);
                     return resultConnections;
                 }
+
             }
             AirConnection beforeVisited = baseFlights.Last();
             (from connection in baseFlights

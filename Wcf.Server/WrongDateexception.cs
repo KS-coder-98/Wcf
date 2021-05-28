@@ -8,14 +8,15 @@ namespace Wcf.Server
 {
     class WrongDateexception : Exception 
     {
-        String msg;
+        public String msg;
         public WrongDateexception()
         {
-            Console.WriteLine("Zle wprowadznone daty");
+            msg = "Zle wprowadznone daty";
+            Console.WriteLine(msg);
         }
         public String getMsg()
         {
-            return "Zle wprowadznone daty";
+            return msg;
         }
     }
 }
