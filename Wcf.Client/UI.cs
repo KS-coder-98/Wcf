@@ -56,8 +56,15 @@ namespace Wcf.Client
             var portA = ChooseOptionString();
             Console.WriteLine("Podaj miasto koncowe - portB");
             var portB = ChooseOptionString();
-            var result = proxy.SearchByLocation(portA, portB);
-            ShowResult(result);
+            try
+            {
+                var result = proxy.SearchByLocation(portA, portB);
+                ShowResult(result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public void UiSearchConnectionWithDates()
@@ -162,7 +169,10 @@ namespace Wcf.Client
             {
                 ShowMainMenu();
                 opt = ChooseOptionInt();
-                mainOptions[opt].Make();
+                if (opt < AllMainAction.Count() && opt >= 0)
+                    mainOptions[opt].Make();
+                else
+                    Console.WriteLine("Zla opcja wpisz jeszcze raz:");
             }
         }
         #endregion
@@ -170,6 +180,11 @@ namespace Wcf.Client
         #region ShowResult
         public void ShowResult(List<List<AirConnection>> result)
         {
+            if ( result.Last().Last().portA == "ERROR")
+            {
+                Console.WriteLine(result.Last().Last().portB);
+                return;
+            }
             int numberOption = 0;
             int numberConnetion;
             result.ForEach(x =>

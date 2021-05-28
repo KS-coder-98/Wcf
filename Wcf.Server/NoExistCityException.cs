@@ -8,9 +8,15 @@ namespace Wcf.Server
 {
     class NoExistCityException : Exception
     {
+        String city;
         public NoExistCityException(string msg) : base(msg)
         {
-            Console.WriteLine($"Nie ma takiego miasta jak {msg}");
+            city = msg;
+        }
+
+        public String getMsg()
+        {
+            return $"Nie ma takiego miasta {city}";
         }
     }
 }

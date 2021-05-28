@@ -50,11 +50,17 @@ namespace Wcf.Server
                 }
                 catch (NoExistCityException e)
                 {
-                    Console.WriteLine(e);
+                    List<AirConnection> t = new List<AirConnection>();
+                    t.Add(new AirConnection("ERROR", departure, e.getMsg(), arrival));
+                    resultConnections.Add(t);
+                    return resultConnections;
                 }
                 catch (WrongDateexception e)
                 {
-                    Console.WriteLine(e);
+                    List<AirConnection> t = new List<AirConnection>();
+                    t.Add(new AirConnection("ERROR", departure, e.getMsg(), arrival));
+                    resultConnections.Add(t);
+                    return resultConnections;
                 }
             }
             AirConnection beforeVisited = baseFlights.Last();

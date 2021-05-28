@@ -18,7 +18,6 @@ namespace Wcf.Client
             var chanel = new ChannelFactory<IMessageService>(binding);
             var endpoint = new EndpointAddress(uri);
             IMessageService proxy = chanel.CreateChannel(endpoint);
-            Console.ReadLine();
             var ui = new UI(proxy);
             ui.RunUI();
         }
